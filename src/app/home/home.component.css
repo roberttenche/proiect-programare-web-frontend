@@ -1,0 +1,9 @@
+.flexbox {
+  margin: auto;
+}
+
+.flexbox-item {
+  float: left;
+  padding-left: 25px;
+  padding-top: 25px;
+}

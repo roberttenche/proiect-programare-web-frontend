@@ -1,0 +1,25 @@
+.chat-bubbles {
+  /* debug */
+  width: 25%;
+  min-width: 200px;
+  min-height: 200px;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: black;
+  background-color: aqua;
+  /**/
+  float: left;
+}
+
+.chat {
+  /* debug */
+  width: 75%;
+  min-width: 300px;
+  min-height: 200px;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: black;
+  background-color: aqua;
+  /* production*/
+  float: left;
+}

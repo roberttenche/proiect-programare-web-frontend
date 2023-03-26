@@ -1,0 +1,35 @@
+
+
+<div class="flexbox" *ngFor="let surgeon of surgeonList | async">
+
+  <div class="flexbox-item">
+    <p-card [header]="surgeon.name" [subheader]="surgeon.title" [style]="{ width: '360px' }">
+      
+      <ng-template pTemplate="header">
+        <img alt="Card" [src]="surgeon.image"/>
+      </ng-template>
+      
+      <p-rating [(ngModel)]="surgeon.rating" [stars]="10" [cancel]="false" [readonly]="true"></p-rating>
+      <p [textContent]="surgeon.description"></p>
+      
+      <ng-template pTemplate="footer">
+          <p-button label="Send Message" icon="pi pi-comment" (onClick)="sendMessageRedirect(surgeon.id)"></p-button>
+      
+        </ng-template>
+    </p-card>
+  </div>
+
+</div>
+
+<!-- <img class="flexbox-item" [src]="movie.imagePath" (click)="display_dialog(movie.id)" />
+
+  <p-dialog [header]="movie.name" [(visible)]="dialogArray[movie.id]" [style]="{height: '75%', width: '75%'}">
+    <p>{{movie.description}}</p>
+    <video width="50%" [src]="movie.trailerPath" controls></video>
+    <ng-template pTemplate="footer">
+      <p-button icon="pi pi-play" (click)="redirectToMovie(movie.id)" label="Watch movie"
+        styleClass="p-button-text"></p-button>
+      <p-button icon="pi pi-check" (click)="dialogArray[movie.id]=false" label="Ok"
+        styleClass="p-button-text"></p-button>
+    </ng-template>
+  </p-dialog> -->
