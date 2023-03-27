@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SurgeonService, Surgeon } from '../services/surgeon.service';
 
 @Component({
   selector: 'app-chat',
@@ -9,25 +11,37 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class ChatComponent {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  selectedSurgeonId : number;
+  sidebarVisible : boolean;
+  surgeonList : Observable<Surgeon[]>;
 
-  ngOnInit(): void {
-    // let surgeonId = this.route.snapshot.paramMap.get('surgeonId')
+  constructor(private route: ActivatedRoute, private http: HttpClient, private surgeonService : SurgeonService)
+  {
+    this.selectedSurgeonId = -1
+    this.sidebarVisible = true
+    this.surgeonList = surgeonService.getSurgeons()
+  }
 
-    let surgeonId = null
+  ngOnInit(): void
+  {
 
     this.route.queryParams.subscribe(param =>
-        {
-          surgeonId = param['surgeonId']
-        }
-      )
-        
-    if (surgeonId == null) {
+    {
+      this.selectedSurgeonId = param['surgeonId']
+    })
+
+    if (this.selectedSurgeonId == null) {
       console.warn('Surgeon ID is recievied as null to ChatComponent');
     }
 
-    console.log(surgeonId)
+  }
 
+  getSurgeonId(): number {
+    return this.selectedSurgeonId;
+  }
+
+  setSurgeionId(id : number): void {
+    this.selectedSurgeonId = id
   }
 
 }

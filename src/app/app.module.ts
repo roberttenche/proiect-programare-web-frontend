@@ -14,6 +14,8 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
 import { RatingModule } from 'primeng/rating';
+import { SplitterModule } from 'primeng/splitter';
+import { AvatarModule } from 'primeng/avatar';
 
 /* Project Components */
 import { AppRoutingModule } from './app-routing.module';
@@ -46,7 +48,9 @@ import { ChatComponent } from './chat/chat.component';
     ButtonModule,
     DialogModule,
     CardModule,
-    RatingModule
+    RatingModule,
+    SplitterModule,
+    AvatarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

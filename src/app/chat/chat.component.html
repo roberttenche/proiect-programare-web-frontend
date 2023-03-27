@@ -1,8 +1,13 @@
-<div class="main-container">
-  <div class="chat-bubbles">
+<p-splitter [style]="{ height: '75vh' }" [panelSizes]="[25, 75]" styleClass="mb-5" >
 
-  </div>
-  <div class="chat">
+  <ng-template pTemplate >
+    <p-avatar *ngFor="let surgeon of surgeonList | async" [image]="surgeon.image" styleClass="mr-2" size="xlarge" shape="circle">
+    </p-avatar>
+    <label>Test</label>
+  </ng-template>
 
-  </div>
-</div>
+  <ng-template pTemplate>
+    <p>Chat</p>
+  </ng-template>
+
+</p-splitter>
