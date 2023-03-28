@@ -12,19 +12,18 @@ import { SurgeonService, Surgeon } from '../services/surgeon.service';
 export class ChatComponent {
 
   selectedSurgeonId : number;
-  sidebarVisible : boolean;
+  chatVisible : boolean;
   surgeonList : Observable<Surgeon[]>;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private surgeonService : SurgeonService)
   {
     this.selectedSurgeonId = -1
-    this.sidebarVisible = true
+    this.chatVisible = false
     this.surgeonList = surgeonService.getSurgeons()
   }
 
   ngOnInit(): void
   {
-
     this.route.queryParams.subscribe(param =>
     {
       this.selectedSurgeonId = param['surgeonId']
@@ -32,6 +31,10 @@ export class ChatComponent {
 
     if (this.selectedSurgeonId == null) {
       console.warn('Surgeon ID is recievied as null to ChatComponent');
+    }
+    else 
+    {
+      this.chatVisible = true
     }
 
   }
@@ -42,6 +45,7 @@ export class ChatComponent {
 
   setSurgeionId(id : number): void {
     this.selectedSurgeonId = id
+    this.chatVisible=true
   }
 
 }

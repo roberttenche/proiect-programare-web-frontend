@@ -1,13 +1,18 @@
 <p-splitter [style]="{ height: '75vh' }" [panelSizes]="[25, 75]" styleClass="mb-5" >
 
-  <ng-template pTemplate >
-    <p-avatar *ngFor="let surgeon of surgeonList | async" [image]="surgeon.image" styleClass="mr-2" size="xlarge" shape="circle">
-    </p-avatar>
-    <label>Test</label>
+  <ng-template pTemplate>
+    <div class="chat-head-container">
+      <div class="chat-head" *ngFor="let surgeon of surgeonList | async" (click)="setSurgeionId(surgeon.id)">
+        <p-avatar [image]="surgeon.image" styleClass="mr-2" size="xlarge" shape="circle">
+        </p-avatar>
+        <label [textContent]="surgeon.name"></label>
+      </div>
+    </div>
   </ng-template>
 
-  <ng-template pTemplate>
-    <p>Chat</p>
-  </ng-template>
+    <ng-template pTemplate *ngIf="chatVisible">
+      <button pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text" style="margin-top: auto;"></button>
+      <input pInputText placeholder="Type a message" style="margin-top: auto; min-width: 100vh;"/>
+    </ng-template>
 
 </p-splitter>
