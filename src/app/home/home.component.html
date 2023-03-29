@@ -1,5 +1,3 @@
-
-
 <div class="flexbox" *ngFor="let surgeon of surgeonList | async">
 
   <div class="flexbox-item">
@@ -18,16 +16,3 @@
   </div>
 
 </div>
-
-<!-- <img class="flexbox-item" [src]="movie.imagePath" (click)="display_dialog(movie.id)" />
-
-  <p-dialog [header]="movie.name" [(visible)]="dialogArray[movie.id]" [style]="{height: '75%', width: '75%'}">
-    <p>{{movie.description}}</p>
-    <video width="50%" [src]="movie.trailerPath" controls></video>
-    <ng-template pTemplate="footer">
-      <p-button icon="pi pi-play" (click)="redirectToMovie(movie.id)" label="Watch movie"
-        styleClass="p-button-text"></p-button>
-      <p-button icon="pi pi-check" (click)="dialogArray[movie.id]=false" label="Ok"
-        styleClass="p-button-text"></p-button>
-    </ng-template>
-  </p-dialog> -->

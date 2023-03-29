@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SurgeonService, Surgeon } from '../services/surgeon.service';
+import { Surgeon } from '../models/surgeon.model';
+import { SurgeonService } from '../services/surgeon.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
 

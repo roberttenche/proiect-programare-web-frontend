@@ -1,19 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
-export interface Surgeon {
-  id: number,
-
-  name: string,
-  title: string,
-
-  rating: number, // 0 - 10
-  description: string,
-
-  image: string, // url profile image
-
-}
+import { Surgeon } from '../models/surgeon.model';
 
 @Injectable({
   providedIn: 'root'

@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SurgeonService, Surgeon } from '../services/surgeon.service';
+import { Surgeon } from '../models/surgeon.model';
+import { SurgeonService } from '../services/surgeon.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
 

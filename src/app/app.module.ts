@@ -1,8 +1,9 @@
-/* Angular Stuff */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /* External Imports */
@@ -16,28 +17,35 @@ import { CardModule } from 'primeng/card';
 import { RatingModule } from 'primeng/rating';
 import { SplitterModule } from 'primeng/splitter';
 import { AvatarModule } from 'primeng/avatar';
+import { CheckboxModule } from 'primeng/checkbox';
 
-/* Project Components */
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
-import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { StyleClassModule } from 'primeng/styleclass';
 import { ChatComponent } from './chat/chat.component';
+import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { SignupComponent } from './signup/signup.component';
+import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
+    ChatComponent,
     HomeComponent,
+    NavbarComponent,
     PagenotfoundComponent,
-    ChatComponent
+    SignupComponent,
+    ContactComponent,
+    LoginComponent
   ],
   imports: [
-    /* Angular Stuff */
+    /* Angular stuff */
     BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
+    CheckboxModule,
+    StyleClassModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
 
