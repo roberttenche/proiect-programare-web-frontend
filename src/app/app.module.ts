@@ -27,6 +27,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SignupComponent } from './signup/signup.component';
 import { ContactComponent } from './contact/contact.component';
 import { LoginComponent } from './login/login.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LoginComponent } from './login/login.component';
     PagenotfoundComponent,
     SignupComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    AboutComponent
   ],
   imports: [
     /* Angular stuff */
