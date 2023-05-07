@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -7,19 +8,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
-  username: String;
-  password1: String;
-  password2: String;
+  username!: string;
+  password1!: string;
+  password2!: string;
 
-  constructor(private router: Router)
-  {
-    this.username = '';
-    this.password1 = '';
-    this.password2 = '';
+  constructor(private router: Router, private authService : AuthService){}
+
+  registerUser(): void {
+    this.authService.registerUser(
+    {
+      "id": 0,
+      "name": this.username,
+      "password": this.password1
+    })
+    .subscribe((data: any) =>
+    {
+      console.log(data)
+    })
   }
-  test(): void{
-    console.log (this.username)
-    console.log (this.password1)
-    console.log (this.password2)
-  }
+
+  
 }
