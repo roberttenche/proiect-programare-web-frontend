@@ -21,33 +21,13 @@ export class HomeComponent {
   ngOnInit(): void
   {
     this.surgeonList = this.surgeonService.getSurgeons()
+    this.surgeonList.forEach(surgeon => console.log(surgeon))
   }
 
   sendMessageRedirect(surgeonId: number): void {
 
-    // let userData = {
-    //   'token': localStorage.getItem('token'),
-    //   'userId': localStorage.getItem('userId')
-    // }
-
-    // if (userData.token == null || userData.userId == null) {
-    //   alert('To watch movie, please login')
-    //   throw new Error("Login required")
-    // }
-
-    let letParams = new HttpParams()
-      .append("surgeonId", surgeonId)
-
-    // this.http.post(this.checkTokenValidity_url, letParams).subscribe((res : any) => {
-    //   if ( res ){
-    //     alert('check if user bought movie')
     this.router.navigate(['/chat'], {queryParams: { surgeonId: surgeonId}})
 
-    //   } else {
-    //     alert('Please log in again')
-    //   }
-    // });
   }
 
-  // let movieId = this.route.snapshot.paramMap.get('id')
 }

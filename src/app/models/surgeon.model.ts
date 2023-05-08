@@ -1,5 +1,8 @@
+import { User } from "./user.model";
+
 export interface Surgeon {
   id: number,
+  user: User,
 
   name: string,
   title: string,
@@ -7,6 +10,6 @@ export interface Surgeon {
   rating: number, // 0 - 10
   description: string,
 
-  image: string, // url profile image
+  imageUrl: string, // url profile image
 
 }

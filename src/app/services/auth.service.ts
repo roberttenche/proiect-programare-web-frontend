@@ -8,7 +8,7 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
 
-  private readonly configUrl = 'http://localhost:8080/auth/';
+  private readonly auth_url = 'http://localhost:8080/auth/';
 
   private constructor(private http:HttpClient) { }
 
@@ -22,17 +22,54 @@ export class AuthService {
 
   registerUser(user : User) : Observable<string>
   {
-    return this.http.post<string>(this.configUrl + "register" ,
-      {
-        "username": user.name,
-        "password": user.password
+    this.logOut()
+    return this.http.post<string>(this.auth_url + "register" , 
+    {
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "username": user.username,
+      "email": user.email,
+      "password": user.password,
+      "role": "USER"
+    })
+    .pipe(
+      catchError((err: any) => {
+        console.error(err);
+        return of("");
       })
-      .pipe(
-        catchError((err: any) => {
-          console.error(err);
-          return of(""); 
-        })
-      );
+    );
+  }
+
+  getToken() : string | null
+  {
+    return localStorage.getItem("token")
+  }
+
+  setToken(token : string)
+  {
+    localStorage.setItem("token", token)
+  }
+
+  getUserId() : string | null
+  {
+    return localStorage.getItem("userId")
+  }
+
+  setUserId(userId: number)
+  {
+    localStorage.setItem("userId", String(userId))
+  }
+
+  logOut()
+  {
+    localStorage.clear()
+    localStorage.removeItem("token")
+    localStorage.removeItem("userId")
+  }
+
+  checkIfLoggedIn()
+  {
+    
   }
 
   // updateUser(user: User) {

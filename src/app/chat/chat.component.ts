@@ -40,11 +40,12 @@ export class ChatComponent {
 
   }
 
-  getSurgeonId(): number {
+  getSelectedSurgeonId(): number
+  {
     return this.selectedSurgeonId;
   }
 
-  setSurgeionId(id : number): void {
+  setSelectedSurgeonId(id : number): void {
     this.selectedSurgeonId = id
     this.chatVisible=true
   }

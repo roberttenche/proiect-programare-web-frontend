@@ -8,7 +8,13 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
+
+  firstName!: string;
+  lastName!: string;
+
   username!: string;
+  email! : string;
+
   password1!: string;
   password2!: string;
 
@@ -18,14 +24,19 @@ export class SignupComponent {
     this.authService.registerUser(
     {
       "id": 0,
-      "name": this.username,
-      "password": this.password1
+      "firstName": this.firstName,
+      "lastName": this.lastName,
+      "username": this.username,
+      "email": this.email,
+      "password": this.password1,
+      "role": "USER"
     })
     .subscribe((data: any) =>
     {
-      console.log(data)
+      this.authService.setToken(data["token"])
+      this.authService.setUserId(data["userId"])
+      this.router.navigateByUrl("home")
     })
-  }
 
-  
+  }
 }
