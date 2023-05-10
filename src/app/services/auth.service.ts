@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError, windowTime } from 'rxjs';
 import { User } from '../models/user.model';
+import { AuthenticationRequest } from '../models/auth.request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,22 +21,21 @@ export class AuthService {
   //   return localStorage.getItem("token");
   // }
 
-  registerUser(user : User) : Observable<string>
+  registerUser(user : User, authRequest: AuthenticationRequest) : Observable<string>
   {
     this.logOut()
     return this.http.post<string>(this.auth_url + "register" , 
     {
       "firstName": user.firstName,
       "lastName": user.lastName,
-      "username": user.username,
       "email": user.email,
-      "password": user.password,
-      "role": "USER"
+      "role": "USER",
+      "username": authRequest.username,
+      "password": authRequest.password
     })
     .pipe(
-      catchError((err: any) => {
-        console.error(err);
-        return of("");
+      catchError(err => {
+        throw new Error(err);
       })
     );
   }
@@ -50,9 +50,9 @@ export class AuthService {
     localStorage.setItem("token", token)
   }
 
-  getUserId() : string | null
+  getUserId() : number
   {
-    return localStorage.getItem("userId")
+    return parseInt(localStorage.getItem("userId") as string)
   }
 
   setUserId(userId: number)
@@ -65,11 +65,6 @@ export class AuthService {
     localStorage.clear()
     localStorage.removeItem("token")
     localStorage.removeItem("userId")
-  }
-
-  checkIfLoggedIn()
-  {
-    
   }
 
   // updateUser(user: User) {

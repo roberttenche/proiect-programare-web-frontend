@@ -2,17 +2,17 @@
 
   <ng-template pTemplate>
     <div class="chat-head-container">
-      <div class="chat-head" *ngFor="let surgeon of surgeonList | async" (click)="setSelectedSurgeonId(surgeon.id)">
-        <p-avatar [image]="surgeon.imageUrl" styleClass="mr-2" size="xlarge" shape="circle">
+      <div class="chat-head" *ngFor="let user of userList" (click)="setSelectedSurgeonId(user.id)" >
+        <p-avatar [image]="user.imageUrl" styleClass="mr-2" size="xlarge" shape="circle">
         </p-avatar>
-        <label [textContent]="surgeon.user.firstName + ' ' + surgeon.user.lastName"></label>
+        <label [textContent]="user.firstName + ' ' + user.lastName"></label>
       </div>
     </div>
   </ng-template>
 
   <ng-template pTemplate *ngIf="chatVisible">
-    <button pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text" style="margin-top: auto;"></button>
-    <input pInputText placeholder="Type a message" style="margin-top: auto; min-width: 100vh;"/>
+    <button (click)="sendMessage()" pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text" style="margin-top: auto;"></button>
+    <input  [(ngModel)]="textMessage" pInputText placeholder="Type a message" style="margin-top: auto; min-width: 100vh;"/>
   </ng-template>
 
 </p-splitter>

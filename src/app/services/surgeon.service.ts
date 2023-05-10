@@ -31,4 +31,9 @@ export class SurgeonService {
     // return of(srgList)
 
   }
+
+  getSurgeonById(id : number)
+  {
+    return this.http.get<Surgeon>(this.surgeons_url + "/" + id.toString())
+  }
 }

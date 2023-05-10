@@ -3,7 +3,7 @@
   <div class="flexbox-item">
     <p-card [header]="surgeon.user.firstName + ' ' + surgeon.user.lastName" [subheader]="surgeon.title" [style]="{ width: '360px' }">
       <ng-template pTemplate="header">
-        <img alt="Card" [src]="surgeon.imageUrl"/>
+        <img alt="Card" [src]="surgeon.user.imageUrl"/>
       </ng-template>
       
       <p-rating [(ngModel)]="surgeon.rating" [stars]="5" [cancel]="false" [readonly]="true"></p-rating>

@@ -26,10 +26,13 @@ export class SignupComponent {
       "id": 0,
       "firstName": this.firstName,
       "lastName": this.lastName,
-      "username": this.username,
       "email": this.email,
-      "password": this.password1,
+      "imageUrl": "",
       "role": "USER"
+    },
+    {
+      "username": this.username,
+      "password": this.password1
     })
     .subscribe((data: any) =>
     {
