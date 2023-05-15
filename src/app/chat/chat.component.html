@@ -1,18 +1,36 @@
-<p-splitter [style]="{ height: '75vh' }" [panelSizes]="[25, 75]" styleClass="mb-5" >
 
-  <ng-template pTemplate>
-    <div class="chat-head-container">
-      <div class="chat-head" *ngFor="let user of userList" (click)="setSelectedSurgeonId(user.id)" >
-        <p-avatar [image]="user.imageUrl" styleClass="mr-2" size="xlarge" shape="circle">
-        </p-avatar>
-        <label [textContent]="user.firstName + ' ' + user.lastName"></label>
-      </div>
+<div class="grid">
+
+  <div class="chat-head-container col-2">
+    <div class="chat-head" *ngFor="let user of userList" [ngClass]="{'chat-selected': this.selectedSurgeonId == user.id}" (click)="setSelectedSurgeonId(user.id)" >
+      <p-avatar [image]="user.imageUrl" styleClass="mr-2" size="xlarge" shape="circle">
+      </p-avatar>
+      <label [textContent]="user.firstName + ' ' + user.lastName"></label>
     </div>
-  </ng-template>
+  </div>
 
-  <ng-template pTemplate *ngIf="chatVisible">
-    <button (click)="sendMessage()" pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text" style="margin-top: auto;"></button>
-    <input  [(ngModel)]="textMessage" pInputText placeholder="Type a message" style="margin-top: auto; min-width: 100vh;"/>
-  </ng-template>
+  <div class="chat col-8">
+  
+    <p-virtualScroller [value]="messageList" class="border-1 surface-border border-round" [style]="{'width': '50vh'}" scrollHeight="50vh" [itemSize]="50" [lazy]="true" (onLazyLoad)="loadMessages()">
+        <ng-template pTemplate="item" let-item>
+            <div class="flex align-items-center p-2 h-full" [ngClass]="{ 'surface-hover': item.index % 2 === 0 }">
+                {{ item.text }}
+            </div>
+        </ng-template>
+    </p-virtualScroller>
+    <!-- <div class="messages-container">
+      <div class="message-bubble" *ngFor="let message of messageList" >
+        <label [textContent]="message.text"></label>
+      </div>
+    </div> -->
 
-</p-splitter>
+    <div class="message-bar row">
+      <button *ngIf="this.chatVisible" (click)="sendMessage()" pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text" style="margin-top: auto;"></button>
+      <input *ngIf="this.chatVisible"  [(ngModel)]="this.textMessage" pInputText placeholder="Type a message" style="margin-top: auto; min-width: 100vh;"/>
+    </div>
+  </div>
+
+</div>
+
+
+

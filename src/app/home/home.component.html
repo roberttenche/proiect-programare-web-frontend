@@ -8,10 +8,11 @@
       
       <p-rating [(ngModel)]="surgeon.rating" [stars]="5" [cancel]="false" [readonly]="true"></p-rating>
       <p [textContent]="surgeon.description"></p>
-      
+
       <ng-template pTemplate="footer">
-          <p-button label="Send Message" icon="pi pi-comment" (onClick)="sendMessageRedirect(surgeon.id)"></p-button>
-        </ng-template>
+        <p-button label="Send Message" icon="pi pi-comment" (onClick)="sendMessageRedirect(surgeon.id)"></p-button>
+      </ng-template>
+
     </p-card>
   </div>
 </div>

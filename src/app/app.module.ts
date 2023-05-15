@@ -18,6 +18,7 @@ import { RatingModule } from 'primeng/rating';
 import { SplitterModule } from 'primeng/splitter';
 import { AvatarModule } from 'primeng/avatar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { ChatComponent } from './chat/chat.component';
@@ -29,6 +30,7 @@ import { ContactComponent } from './contact/contact.component';
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { _403Interceptor } from './interceptors/403.interceptor';
 
 @NgModule({
   declarations: [
@@ -61,12 +63,18 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     CardModule,
     RatingModule,
     SplitterModule,
-    AvatarModule
+    AvatarModule,
+    VirtualScrollerModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: _403Interceptor,
       multi: true
     }
   ],

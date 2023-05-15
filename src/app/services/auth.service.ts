@@ -40,6 +40,21 @@ export class AuthService {
     );
   }
 
+  loginUser(authRequest: AuthenticationRequest) : Observable<string>
+  {
+    this.logOut()
+    return this.http.post<string>(this.auth_url + "authenticate" , 
+    {
+      "username": authRequest.username,
+      "password": authRequest.password
+    })
+    .pipe(
+      catchError(err => {
+        throw new Error(err);
+      })
+    );
+  }
+
   getToken() : string | null
   {
     return localStorage.getItem("token")

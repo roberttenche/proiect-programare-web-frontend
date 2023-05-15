@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -16,20 +16,17 @@ export class HomeComponent {
 
   surgeonList!: Observable<Surgeon[]>;
 
-  constructor(private router: Router, private authService : AuthService, private surgeonService : SurgeonService, private chatService : ChatService){}
+  constructor(private router: Router, 
+    private authService : AuthService, private surgeonService : SurgeonService, 
+    private chatService : ChatService, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void
   {
     this.surgeonList = this.surgeonService.getSurgeons()
-    this.surgeonList.forEach(surgeon => {
-      console.log(surgeon)
-    })
   }
 
   sendMessageRedirect(surgeonId: number): void {
-
     this.router.navigate(['/chat'], {queryParams: { surgeonId: surgeonId}})
-
   }
 
 }

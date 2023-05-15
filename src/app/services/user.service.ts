@@ -21,10 +21,5 @@ export class UserService {
   getUserById(id : number) : Observable<User>
   {
     return this.http.get<User>(this.users_url + "/" + id.toString())
-    // .pipe(
-    //   catchError(err => {
-    //     throw new Error(err);
-    //   })
-    // );
   }
 }

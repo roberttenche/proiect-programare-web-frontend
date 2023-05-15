@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, firstValueFrom } from 'rxjs';
 import { SurgeonService } from '../services/surgeon.service';
-import { Chat } from '../models/chat.model';
+import { Chat, ChatMessage } from '../models/chat.model';
 import { ChatService } from '../services/chat.service';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,24 +18,34 @@ import { User } from '../models/user.model';
 export class ChatComponent {
 
   selectedChatId : number = 0;
-  selectedSurgeonId! : number;
-  chatVisible! : boolean;
-  chatList! : Observable<Chat[]>;
-  userList : User[] = [];
+  selectedSurgeonId : number = -1;
+  chatVisible : boolean = false;
   textMessage : string = "";
+  userRole : string = "";
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private userService : UserService, private surgeonService : SurgeonService, private chatService : ChatService, private authService : AuthService){}
+  userList : User[] = [];
+  messageList : ChatMessage[] = [];
+  chatList! : Observable<Chat[]>;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, 
+    private userService : UserService, private surgeonService : SurgeonService, 
+    private chatService : ChatService, private authService : AuthService,
+    private messageService: MessageService, private cdr: ChangeDetectorRef)
+    {}
 
   async ngOnInit(): Promise<void>
   {
     this.route.queryParams.subscribe(param =>
     {
-      this.selectedSurgeonId = param['surgeonId']
+      if (parseInt(param['surgeonId'])) {
+        this.selectedSurgeonId = parseInt(param['surgeonId'])
+      }
     })
 
-    if (this.selectedSurgeonId == null)
+    if (this.selectedSurgeonId === -1)
     {
       console.warn('Surgeon ID is recievied as null to ChatComponent');
+      this.chatVisible = false
     }
     else
     {
@@ -67,13 +78,18 @@ export class ChatComponent {
           throw new Error("ChatComponent::ngOnInit::USER 2 TIMES")
         }
 
+        this.userService.getUserById(myId).subscribe((currUser : User) => {
+          this.userRole = currUser.role
+        })
+
         this.userService.getUserById(otherId).subscribe((other : User) => {
           this.userList.push(other)
         })
       })
     })
 
-    
+    this.setSelectedSurgeonId(this.selectedSurgeonId)
+
   }
 
   getSelectedSurgeonId(): number
@@ -83,16 +99,54 @@ export class ChatComponent {
 
   setSelectedSurgeonId(id : number): void
   {
+    if (id === -1) {
+      return;
+    }
+
     this.selectedSurgeonId = id
-    this.chatVisible=true
+
+    this.chatList.forEach(chat => {
+      chat.forEach(c => {
+        if (
+          (c.user1Id == this.authService.getUserId() || c.user2Id == this.authService.getUserId()) &&
+          (c.user1Id == this.selectedSurgeonId || c.user2Id == this.selectedSurgeonId)
+          )
+        {
+          this.selectedChatId = c.id
+        }
+      })
+    })
+
+    this.chatVisible = true;
+    this.cdr.detectChanges();
+
   }
 
   sendMessage()
   {
-    // console.log(this.textMessage)
-    // console.log(this.selectedSurgeonId)
-    console.log(this.authService.getUserId())
-    // this.textMessage = ""
+    if (this.userRole === "USER")
+    {
+      this.messageService.sendMessage(this.textMessage, this.selectedChatId, false)
+    }
+    else if (this.userRole === "SURGEON")
+    {
+      this.messageService.sendMessage(this.textMessage, this.selectedChatId, true)
+    }
+
+    this.loadMessages()
+  
+    this.textMessage = ""
+  }
+
+  loadMessages()
+  {
+    this.messageList = []
+    this.messageService.getMessages(this.selectedChatId)
+    .subscribe((messages : ChatMessage[]) => {
+      messages.forEach((message) => {
+        this.messageList.push(message)
+      })
+    })
   }
 
 }

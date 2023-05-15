@@ -18,10 +18,17 @@ export class MessageService {
   {
   }
 
-  getMessages(): Observable<ChatMessage[]> {
+  getMessages(chatId : number): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(this.message_url + "/" + chatId.toString())
+  }
 
-    return this.http.get<ChatMessage[]>(this.message_url)
-
+  sendMessage(text : string, chatId : number, sentBySurgeon: boolean) {
+    return this.http.post<ChatMessage>(this.message_url,
+      {
+        "text": text,
+        "chatId": chatId,
+        "sentBySurgeon": sentBySurgeon
+      }).subscribe()
   }
 
 }

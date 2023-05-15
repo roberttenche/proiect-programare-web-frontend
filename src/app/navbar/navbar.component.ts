@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,11 +9,9 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavbarComponent {
 
-  items: MenuItem[];
+  items!: MenuItem[];
 
-  constructor() {
-    this.items = [];
-  }
+  constructor(private authService : AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.items = [
@@ -25,13 +24,21 @@ export class NavbarComponent {
         label: 'Login',
         icon: 'pi pi-user',
         routerLink: ['/login']
-      },
-      {
-        label: 'About',
-        icon: 'pi pi-info-circle',
-        routerLink: ['/about']
       }
     ];
+    if (this.authService.getToken() !== null) {
+      this.items.push({
+        label: 'My Chats',
+        icon: 'pi pi-comment',
+        routerLink: ['/chat']
+      })
+    }
+
+    this.items.push({
+      label: 'About',
+      icon: 'pi pi-info-circle',
+      routerLink: ['/about']
+    })
   }
 
 }
