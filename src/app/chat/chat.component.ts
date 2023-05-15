@@ -70,7 +70,6 @@ export class ChatComponent {
         this.userService.getUserById(otherId).subscribe((other : User) => {
           this.userList.push(other)
         })
-
       })
     })
 

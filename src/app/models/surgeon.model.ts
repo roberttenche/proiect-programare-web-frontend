@@ -2,7 +2,7 @@ import { User } from "./user.model";
 
 export interface Surgeon {
   id: number,
-  user: User,
+  userBody: User,
 
   title: string,
   description: string,

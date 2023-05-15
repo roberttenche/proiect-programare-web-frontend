@@ -21,6 +21,9 @@ export class HomeComponent {
   ngOnInit(): void
   {
     this.surgeonList = this.surgeonService.getSurgeons()
+    this.surgeonList.forEach(surgeon => {
+      console.log(surgeon)
+    })
   }
 
   sendMessageRedirect(surgeonId: number): void {
