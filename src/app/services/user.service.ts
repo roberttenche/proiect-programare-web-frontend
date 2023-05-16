@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Surgeon } from '../models/surgeon.model';
 import { User } from '../models/user.model';
-import { catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +16,8 @@ export class UserService {
   {
   }
 
-  getUserById(id : number) : Observable<User>
+  async getUserById(id : number) : Promise<User>
   {
-    return this.http.get<User>(this.users_url + "/" + id.toString())
+    return firstValueFrom<User>(this.http.get<User>(this.users_url + "/" + id.toString()))
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ChatMessage } from '../models/chat.model';
 
 @Injectable({
@@ -18,17 +18,21 @@ export class MessageService {
   {
   }
 
-  getMessages(chatId : number): Observable<ChatMessage[]> {
-    return this.http.get<ChatMessage[]>(this.message_url + "/" + chatId.toString())
+  getMessages(chatId : number): Promise<ChatMessage[]> {
+    return firstValueFrom(
+      this.http.get<ChatMessage[]>(this.message_url + "/" + chatId.toString())
+    )
   }
 
-  sendMessage(text : string, chatId : number, sentBySurgeon: boolean) {
-    return this.http.post<ChatMessage>(this.message_url,
+  async sendMessage(text : string, chatId : number, sentBySurgeon: boolean) : Promise<ChatMessage>{
+    return firstValueFrom(
+      this.http.post<ChatMessage>(this.message_url,
       {
         "text": text,
         "chatId": chatId,
         "sentBySurgeon": sentBySurgeon
-      }).subscribe()
+      })
+    )
   }
 
 }

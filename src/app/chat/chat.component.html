@@ -9,25 +9,26 @@
     </div>
   </div>
 
-  <div class="chat col-8">
-  
-    <p-virtualScroller [value]="messageList" class="border-1 surface-border border-round" [style]="{'width': '50vh'}" scrollHeight="50vh" [itemSize]="50" [lazy]="true" (onLazyLoad)="loadMessages()">
-        <ng-template pTemplate="item" let-item>
-            <div class="flex align-items-center p-2 h-full" [ngClass]="{ 'surface-hover': item.index % 2 === 0 }">
-                {{ item.text }}
-            </div>
+  <div class="chat col">
+    <div class="card flex">
+      <p-virtualScroller [value]="messageList" class="scroller border-1 surface-border border-round" scrollHeight="690px" [itemSize]="50">
+
+        <ng-template class="test" pTemplate="message" let-message>
+
+          <div class="chat-bubble" [ngClass]="{'message-right': !message.sentBySurgeon, 'message-left': message.sentBySurgeon}">
+            {{ message.text }}
+          </div>
+
         </ng-template>
-    </p-virtualScroller>
-    <!-- <div class="messages-container">
-      <div class="message-bubble" *ngFor="let message of messageList" >
-        <label [textContent]="message.text"></label>
-      </div>
-    </div> -->
+
+      </p-virtualScroller>
+  </div>
 
     <div class="message-bar row">
       <button *ngIf="this.chatVisible" (click)="sendMessage()" pButton pRipple type="button" icon="pi pi-send" class="p-button-rounded p-button-text" style="margin-top: auto;"></button>
       <input *ngIf="this.chatVisible"  [(ngModel)]="this.textMessage" pInputText placeholder="Type a message" style="margin-top: auto; min-width: 100vh;"/>
     </div>
+
   </div>
 
 </div>

@@ -1,7 +1,9 @@
 <div class="flexbox" *ngFor="let surgeon of surgeonList | async">
 
   <div class="flexbox-item">
+    
     <p-card [header]="surgeon.userBody.firstName + ' ' + surgeon.userBody.lastName" [subheader]="surgeon.title" [style]="{ width: '360px' }">
+      
       <ng-template pTemplate="header">
         <img alt="Card" [src]="surgeon.userBody.imageUrl"/>
       </ng-template>
@@ -14,5 +16,6 @@
       </ng-template>
 
     </p-card>
+  
   </div>
 </div>

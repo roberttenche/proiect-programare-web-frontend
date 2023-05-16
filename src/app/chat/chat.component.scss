@@ -14,6 +14,27 @@
 	max-width: fit-content;
 }
 
+.scroller
+{
+	width: 100%;
+}
+
+.message-right {
+	float: right;
+	padding-top: 10px;
+	padding-right: 25px;
+}
+
+.message-left {
+	float: left;
+	padding-top: 10px;
+	padding-left: 25px;
+}
+
+.test {
+	display: flexbox;
+}
+
 .chat-selected {
 	border:1px solid blue;
 }

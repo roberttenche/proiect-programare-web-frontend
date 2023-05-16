@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { SurgeonService } from '../services/surgeon.service';
 import { Chat, ChatMessage } from '../models/chat.model';
 import { ChatService } from '../services/chat.service';
@@ -25,7 +25,7 @@ export class ChatComponent {
 
   userList : User[] = [];
   messageList : ChatMessage[] = [];
-  chatList! : Observable<Chat[]>;
+  chatList : Chat[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, 
     private userService : UserService, private surgeonService : SurgeonService, 
@@ -35,6 +35,7 @@ export class ChatComponent {
 
   async ngOnInit(): Promise<void>
   {
+
     this.route.queryParams.subscribe(param =>
     {
       if (parseInt(param['surgeonId'])) {
@@ -50,7 +51,7 @@ export class ChatComponent {
     else
     {
       this.chatVisible = true
-      const result : Chat = await firstValueFrom(this.chatService.addChat(this.authService.getUserId(), this.selectedSurgeonId))
+      const result : Chat = await this.chatService.addChat(this.authService.getUserId(), this.selectedSurgeonId)
 
       if (result != null) {
         this.selectedChatId = result.id
@@ -58,10 +59,10 @@ export class ChatComponent {
 
     }
 
-    this.chatList = this.chatService.getChats(this.authService.getUserId())
+    this.chatList = await this.chatService.getChats(this.authService.getUserId())
 
-    this.chatList.forEach(chats =>{
-      chats.forEach(chat => {
+    this.chatList.forEach(async chat =>{
+
         let myId : number = this.authService.getUserId()
         let otherId: number
 
@@ -78,14 +79,12 @@ export class ChatComponent {
           throw new Error("ChatComponent::ngOnInit::USER 2 TIMES")
         }
 
-        this.userService.getUserById(myId).subscribe((currUser : User) => {
-          this.userRole = currUser.role
-        })
+        this.userRole = (await this.userService.getUserById(myId)).role
 
-        this.userService.getUserById(otherId).subscribe((other : User) => {
-          this.userList.push(other)
-        })
-      })
+        this.userList.push(
+          (await this.userService.getUserById(otherId))
+        )
+
     })
 
     this.setSelectedSurgeonId(this.selectedSurgeonId)
@@ -97,7 +96,7 @@ export class ChatComponent {
     return this.selectedSurgeonId;
   }
 
-  setSelectedSurgeonId(id : number): void
+  async setSelectedSurgeonId(id : number): Promise<void>
   {
     if (id === -1) {
       return;
@@ -106,47 +105,45 @@ export class ChatComponent {
     this.selectedSurgeonId = id
 
     this.chatList.forEach(chat => {
-      chat.forEach(c => {
         if (
-          (c.user1Id == this.authService.getUserId() || c.user2Id == this.authService.getUserId()) &&
-          (c.user1Id == this.selectedSurgeonId || c.user2Id == this.selectedSurgeonId)
+          (chat.user1Id == this.authService.getUserId() || chat.user2Id == this.authService.getUserId()) &&
+          (chat.user1Id == this.selectedSurgeonId || chat.user2Id == this.selectedSurgeonId)
           )
         {
-          this.selectedChatId = c.id
+          this.selectedChatId = chat.id
         }
-      })
     })
+
+    this.loadMessages()
 
     this.chatVisible = true;
     this.cdr.detectChanges();
 
   }
 
-  sendMessage()
+  async sendMessage()
   {
+    if (this.textMessage === "") {
+      return;
+    }
+
     if (this.userRole === "USER")
     {
-      this.messageService.sendMessage(this.textMessage, this.selectedChatId, false)
+      await this.messageService.sendMessage(this.textMessage, this.selectedChatId, false)
     }
     else if (this.userRole === "SURGEON")
     {
-      this.messageService.sendMessage(this.textMessage, this.selectedChatId, true)
+      await this.messageService.sendMessage(this.textMessage, this.selectedChatId, true)
     }
 
     this.loadMessages()
-  
+
     this.textMessage = ""
   }
 
-  loadMessages()
+  async loadMessages()
   {
-    this.messageList = []
-    this.messageService.getMessages(this.selectedChatId)
-    .subscribe((messages : ChatMessage[]) => {
-      messages.forEach((message) => {
-        this.messageList.push(message)
-      })
-    })
+    this.messageList = await this.messageService.getMessages(this.selectedChatId)
   }
 
 }
