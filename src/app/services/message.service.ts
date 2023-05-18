@@ -24,12 +24,13 @@ export class MessageService {
     )
   }
 
-  async sendMessage(text : string, chatId : number, sentBySurgeon: boolean) : Promise<ChatMessage>{
+  async sendMessage(text : string | null, chatId : number, sentBySurgeon: boolean, docId : number | null) : Promise<ChatMessage>{
     return firstValueFrom(
       this.http.post<ChatMessage>(this.message_url,
       {
         "text": text,
         "chatId": chatId,
+        "docId": docId,
         "sentBySurgeon": sentBySurgeon
       })
     )

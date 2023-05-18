@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
 import { SurgeonService } from '../services/surgeon.service';
 import { Chat, ChatMessage } from '../models/chat.model';
 import { ChatService } from '../services/chat.service';
@@ -9,6 +8,8 @@ import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { MessageService } from '../services/message.service';
+import { DocumentService } from '../services/document.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-chat',
@@ -23,6 +24,8 @@ export class ChatComponent {
   textMessage : string = "";
   userRole : string = "";
 
+  uploadUrl : string = "http://localhost:8080/documents";
+
   userList : User[] = [];
   messageList : ChatMessage[] = [];
   chatList : Chat[] = [];
@@ -30,7 +33,8 @@ export class ChatComponent {
   constructor(private route: ActivatedRoute, private http: HttpClient, 
     private userService : UserService, private surgeonService : SurgeonService, 
     private chatService : ChatService, private authService : AuthService,
-    private messageService: MessageService, private cdr: ChangeDetectorRef)
+    private messageService: MessageService, private cdr: ChangeDetectorRef,
+    private documentService : DocumentService)
     {}
 
   async ngOnInit(): Promise<void>
@@ -121,19 +125,35 @@ export class ChatComponent {
 
   }
 
-  async sendMessage()
+  async sendMessage(docId : number | null)
   {
-    if (this.textMessage === "") {
+
+    if (this.textMessage === "" && docId === null)
+    {
       return;
     }
 
     if (this.userRole === "USER")
     {
-      await this.messageService.sendMessage(this.textMessage, this.selectedChatId, false)
+      if (docId === null)
+      {
+        await this.messageService.sendMessage(this.textMessage, this.selectedChatId, false, docId)
+      }
+      else
+      {
+        await this.messageService.sendMessage(null, this.selectedChatId, false, docId)
+      }
     }
     else if (this.userRole === "SURGEON")
     {
-      await this.messageService.sendMessage(this.textMessage, this.selectedChatId, true)
+      if (docId === null)
+      {
+        await this.messageService.sendMessage(this.textMessage, this.selectedChatId, true, docId)
+      }
+      else
+      {
+        await this.messageService.sendMessage(null, this.selectedChatId, true, docId)
+      }
     }
 
     this.loadMessages()
@@ -144,6 +164,26 @@ export class ChatComponent {
   async loadMessages()
   {
     this.messageList = await this.messageService.getMessages(this.selectedChatId)
+  }
+
+  async onUpload(event: any, form: any)
+  {
+
+    let docId : number = await this.documentService.addDocument(event.files[0])
+
+    this.sendMessage(docId)
+
+    form.clear()
+
+
+  }
+
+  async downloadAttachment(docId : number, fileName : string)
+  {
+    console.log('test')
+    let response = await this.documentService.getDocument(docId)
+
+    saveAs(new File([response.body] as BlobPart[], fileName))
   }
 
 }

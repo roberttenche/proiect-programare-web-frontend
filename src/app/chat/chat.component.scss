@@ -1,17 +1,12 @@
 .chat-head-container {
 	display: flex;
 	flex-direction: column;
-	max-width: fit-content;
 }
 .chat-head {
 	position: relative;
 	display: flex;
 	flex-direction: row;
 	padding: 20px;
-}
-
-.messages-container {
-	max-width: fit-content;
 }
 
 .scroller
@@ -37,6 +32,10 @@
 
 .chat-selected {
 	border:1px solid blue;
+}
+
+.attachment:hover{
+	color: blue;
 }
 
 // input {

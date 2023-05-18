@@ -19,6 +19,7 @@ import { SplitterModule } from 'primeng/splitter';
 import { AvatarModule } from 'primeng/avatar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import { FileUploadModule } from 'primeng/fileupload';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { ChatComponent } from './chat/chat.component';
@@ -64,7 +65,8 @@ import { _403Interceptor } from './interceptors/403.interceptor';
     RatingModule,
     SplitterModule,
     AvatarModule,
-    VirtualScrollerModule
+    VirtualScrollerModule,
+    FileUploadModule
   ],
   providers: [
     {
