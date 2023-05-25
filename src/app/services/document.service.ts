@@ -26,7 +26,6 @@ export class DocumentService {
   }
 
   async getDocument(docId : number) : Promise<HttpResponse<Blob>>{
-    console.log('test1')
     return firstValueFrom(
       this.http.get(this.documents_url + "/" + docId.toString(),
       {

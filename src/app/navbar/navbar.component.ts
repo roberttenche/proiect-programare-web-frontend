@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +13,9 @@ export class NavbarComponent {
 
   items!: MenuItem[];
 
-  constructor(private authService : AuthService, private cdr: ChangeDetectorRef) {}
+  constructor(private authService : AuthService, private userService : UserService) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.items = [
       {
         label: 'Home',
@@ -26,19 +28,33 @@ export class NavbarComponent {
         routerLink: ['/login']
       }
     ];
-    if (this.authService.getToken() !== null) {
-      this.items.push({
-        label: 'My Chats',
-        icon: 'pi pi-comment',
-        routerLink: ['/chat']
-      })
-    }
+    this.items.push({
+      label: 'Chats',
+      icon: 'pi pi-comment',
+      routerLink: ['/chat']
+    })
+
 
     this.items.push({
-      label: 'About',
-      icon: 'pi pi-info-circle',
-      routerLink: ['/about']
+      label: 'Appointments',
+      icon: 'pi pi-calendar',
+
+      items: [
+        {
+          label: 'My appointments',
+          icon: 'pi pi-fw pi-book',
+          routerLink: ['/appointments']
+        },
+        {
+          label: 'Add appointment',
+          icon: 'pi pi-fw pi-calendar-plus',
+          routerLink: ['/appointments/add']
+        }
+      ]
     })
+
+
+    
   }
 
 }

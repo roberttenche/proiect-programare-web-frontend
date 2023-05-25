@@ -16,14 +16,22 @@
 
 .message-right {
 	float: right;
-	padding-top: 10px;
-	padding-right: 25px;
+	padding: 10px;
+	margin-right: 15vw;
+	background-color: azure;
+	border-style: solid;
+	border-radius: 1px;
+	border-color: black;
 }
 
 .message-left {
 	float: left;
-	padding-top: 10px;
-	padding-left: 25px;
+	padding: 10px;
+	margin-left: 15vw;
+	background-color: aquamarine;
+	border-style: solid;
+	border-radius: 1px;
+	border-color: black;
 }
 
 .test {
@@ -37,7 +45,3 @@
 .attachment:hover{
 	color: blue;
 }
-
-// input {
-// 	max-height: 7vh;
-// }

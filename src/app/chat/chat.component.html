@@ -14,20 +14,21 @@
     <div class="card flex row">
       <p-virtualScroller [value]="messageList" class="scroller border-1 surface-border border-round" scrollHeight="650px" [itemSize]="50">
 
-        <ng-template class="test" pTemplate="message" let-message>
+        <ng-template pTemplate="message" let-message>
 
           <div *ngIf="userRole==='USER'" class="chat-bubble" [ngClass]="{'message-right': !message.sentBySurgeon, 'message-left': message.sentBySurgeon}">
             
-            <h1 *ngIf="message.docId ===null">{{ message.text }}</h1>
+            <div *ngIf="message.docId ===null">{{ message.text }}</div>
             
-            <h1 class="attachment" *ngIf="message.docId !==null" (click)="downloadAttachment(message.docId, message.text)">
-              <i class="pi pi-file"></i>
-              {{ message.text }}
-            </h1>
+            <div class="attachment" *ngIf="message.docId !==null" (click)="downloadAttachment(message.docId, message.text)">
+                <i class="pi pi-file"></i>
+                {{ message.text }}
+            </div>
+
           </div>
 
           <div *ngIf="userRole==='SURGEON'" class="chat-bubble" [ngClass]="{'message-right': message.sentBySurgeon, 'message-left': !message.sentBySurgeon}">
-            <h1>{{ message.text }}</h1>
+            <div>{{ message.text }}</div>
           </div>
 
         </ng-template>

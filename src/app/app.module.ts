@@ -20,6 +20,10 @@ import { AvatarModule } from 'primeng/avatar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { FileUploadModule } from 'primeng/fileupload';
+import { CalendarModule } from 'primeng/calendar';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { ChatComponent } from './chat/chat.component';
@@ -32,6 +36,8 @@ import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { _403Interceptor } from './interceptors/403.interceptor';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { AppointmentsAddComponent } from './appointments-add/appointments-add.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +49,9 @@ import { _403Interceptor } from './interceptors/403.interceptor';
     SignupComponent,
     ContactComponent,
     LoginComponent,
-    AboutComponent
+    AboutComponent,
+    AppointmentsComponent,
+    AppointmentsAddComponent
   ],
   imports: [
     /* Angular stuff */
@@ -66,7 +74,11 @@ import { _403Interceptor } from './interceptors/403.interceptor';
     SplitterModule,
     AvatarModule,
     VirtualScrollerModule,
-    FileUploadModule
+    FileUploadModule,
+    CalendarModule,
+    DynamicDialogModule,
+    ToastModule,
+    FullCalendarModule
   ],
   providers: [
     {
