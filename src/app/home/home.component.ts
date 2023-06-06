@@ -14,15 +14,15 @@ import { AuthService } from '../services/auth.service';
 })
 export class HomeComponent {
 
-  surgeonList!: Observable<Surgeon[]>;
+  surgeonList!: Surgeon[];
 
   constructor(private router: Router, 
     private authService : AuthService, private surgeonService : SurgeonService, 
     private chatService : ChatService, private cdr: ChangeDetectorRef){}
 
-  ngOnInit(): void
+  async ngOnInit(): Promise<void>
   {
-    this.surgeonList = this.surgeonService.getSurgeons()
+    this.surgeonList = await this.surgeonService.getSurgeons()
   }
 
   sendMessageRedirect(surgeonId: number): void {

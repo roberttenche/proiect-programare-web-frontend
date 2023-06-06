@@ -24,6 +24,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { ChatComponent } from './chat/chat.component';
@@ -78,7 +79,8 @@ import { AppointmentsAddComponent } from './appointments-add/appointments-add.co
     CalendarModule,
     DynamicDialogModule,
     ToastModule,
-    FullCalendarModule
+    FullCalendarModule,
+    DropdownModule
   ],
   providers: [
     {

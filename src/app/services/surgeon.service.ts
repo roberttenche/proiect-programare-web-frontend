@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, firstValueFrom, of } from 'rxjs';
 import { Surgeon } from '../models/surgeon.model';
 
 @Injectable({
@@ -18,9 +18,10 @@ export class SurgeonService {
   {
   }
 
-  getSurgeons(): Observable<Surgeon[]> {
-
-    return this.http.get<Surgeon[]>(this.surgeons_url)
+  getSurgeons(): Promise<Surgeon[]> {
+    return firstValueFrom(
+      this.http.get<Surgeon[]>(this.surgeons_url)
+    )
 
   }
 
