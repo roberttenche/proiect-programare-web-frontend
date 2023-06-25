@@ -39,6 +39,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { _403Interceptor } from './interceptors/403.interceptor';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { AppointmentsAddComponent } from './appointments-add/appointments-add.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AppointmentsAddComponent } from './appointments-add/appointments-add.co
     LoginComponent,
     AboutComponent,
     AppointmentsComponent,
-    AppointmentsAddComponent
+    AppointmentsAddComponent,
+    InvoiceComponent
   ],
   imports: [
     /* Angular stuff */

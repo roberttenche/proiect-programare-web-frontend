@@ -1,0 +1,108 @@
+<div class="app-wrapper" ng-app="InvoiceGenerator">
+    <div class="container" ng-controller="InvoiceGeneratorCtrl">
+      <div class="row">
+        <div class="col-12">
+          <h1>Invoice generator</h1>
+          <div class="invoice">
+            <fieldset ng-disabled="previewMode">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <h2>Invoice</h2>
+                    <hr>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-5">
+                    <input class="form-control form-control-sm" type="text" [(ngModel)]="fromCompany" placeholder="From company">
+                    <textarea class="form-control form-control-sm" type="text" [(ngModel)]="fromAddress" placeholder="From address"></textarea>
+                    <input class="form-control form-control-sm" type="text" [(ngModel)]="toCompany" placeholder="To company">
+                    <textarea class="form-control form-control-sm" type="text" [(ngModel)]="toAddress" placeholder="To address"></textarea>
+                  </div>
+                  <div class="col-7">
+                    <dl class="row">
+                      <dt class="col-4">Reference</dt>
+                      <dd class="col-8">
+                        <input class="form-control form-control-sm" type="text" [(ngModel)]="reference">
+                      </dd>
+                      <dt class="col-4">Date</dt>
+                      <dd class="col-8">
+                        <input class="form-control form-control-sm" type="date" [value]="dateSent" [(ngModel)]="dateSent">
+                      </dd>
+                      <dt class="col-4">Due</dt>
+                      <dd class="col-8">
+                        <input class="form-control form-control-sm" type="date" [(ngModel)]="dateDue">
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
+                          <th>Amount</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody class="table_body">
+                        <tr *ngFor="let product of products; let i = index">
+                          <td>
+                            <input class="form-control form-control-sm" type="text" [(ngModel)]="product.description" placeholder="Product description">
+                          </td>
+                          <td>
+                            <input class="form-control form-control-sm" type="number" [(ngModel)]="product.quantity" (ngModelChange)="productPriceChange(product)">
+                          </td>
+                          <td>
+                            <input class="form-control form-control-sm" type="number" [(ngModel)]="product.price" (ngModelChange)="productPriceChange(product)">
+                          </td>
+                          <td>&pound;{{ product.amount }}</td>
+                          <td>
+                            <button class="btn btn-danger" (click)="removeProduct(product)">
+                              <i class="fa fa-times"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="5">
+                            <button class="btn btn-success" (click)="addBlankProduct()">
+                              <i class="fa fa-plus"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <dl class="row">
+                      <dt class="col-2 offset-8">Subtotal</dt>
+                      <dd class="col-2">&pound;{{ subtotal }}</dd>
+                      <dt class="col-2 offset-8">Tax (20%)</dt>
+                      <dd class="col-2">&pound;{{ tax }}</dd>
+                      <dt class="col-2 offset-8">Total</dt>
+                      <dd class="col-2">&pound;{{ total }}</dd>
+                    </dl>
+                    <hr>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <h5>Notes</h5>
+                    <textarea class="form-control form-control-sm" type="text" [(ngModel)]="notes"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <h5>Terms</h5>
+                    <textarea class="form-control form-control-sm" type="text" [(ngModel)]="terms"></textarea>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
