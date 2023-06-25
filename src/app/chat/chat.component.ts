@@ -60,7 +60,6 @@ export class ChatComponent {
       if (result != null) {
         this.selectedChatId = result.id
       }
-
     }
 
     this.chatList = await this.chatService.getChats(this.authService.getUserId())
@@ -122,7 +121,6 @@ export class ChatComponent {
 
     this.chatVisible = true;
     this.cdr.detectChanges();
-
   }
 
   async sendMessage(docId : number | null)

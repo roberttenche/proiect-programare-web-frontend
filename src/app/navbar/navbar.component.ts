@@ -26,13 +26,15 @@ export class NavbarComponent {
         label: 'Login',
         icon: 'pi pi-user',
         routerLink: ['/login']
+      },
+      {
+        label: 'Chats',
+        icon: 'pi pi-comment',
+        routerLink: ['/chat']
       }
     ];
-    this.items.push({
-      label: 'Chats',
-      icon: 'pi pi-comment',
-      routerLink: ['/chat']
-    })
+
+    this.items.push()
 
 
     this.items.push({
@@ -51,10 +53,13 @@ export class NavbarComponent {
           routerLink: ['/appointments/add']
         }
       ]
-    })
-
-
-    
+    },
+      {
+        label: 'About',
+        icon: 'pi pi-info',
+        routerLink: ['/about']
+      }
+      )
   }
 
 }

@@ -13,14 +13,6 @@ export class AuthService {
 
   private constructor(private http:HttpClient) { }
 
-  // saveUser(user: User) {
-  //   localStorage.setItem("token", window.btoa(JSON.stringify(user)))
-  // }
-
-  // getToken(){
-  //   return localStorage.getItem("token");
-  // }
-
   registerUser(user : User, authRequest: AuthenticationRequest) : Observable<string>
   {
     this.logOut()
@@ -82,30 +74,4 @@ export class AuthService {
     localStorage.removeItem("userId")
   }
 
-  // updateUser(user: User) {
-  //   return this.http.put(this.configUrl + "update/" + user.userId, {
-  //     "password": user.userPassword,
-  //     "username": user.userName
-
-  //   })
-  //   .pipe(catchError(this.handleError));
-  // }
-
-  // private getUsersList():Observable<User[]> {
-  //   return this.http.get<User[]>(this.configUrl + "users").pipe(
-  //     catchError(this.handleError));
-  // }
-
-  // getUserByUsername(username:string) {
-  //   return this.http.get(this.configUrl + "users/" + username).pipe(
-  //     catchError(this.handleError));
-  // }
-
-  // handleError(err: HttpErrorResponse){
-  //   if(err.status === 404){
-  //     alert("Not found");
-  //   }
-  //   return throwError(() => err);
-
-  // }
 }
