@@ -8,6 +8,7 @@ import { SignupComponent } from './signup/signup.component';
 import { AboutComponent } from './about/about.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { AppointmentsAddComponent } from './appointments-add/appointments-add.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent},
   { path: 'appointments', component: AppointmentsComponent},
   { path: 'appointments/add', component: AppointmentsAddComponent},
+  { path: 'invoice', component: InvoiceComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }
 ];

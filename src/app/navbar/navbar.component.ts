@@ -53,6 +53,12 @@ export class NavbarComponent {
       ]
     })
 
+    this.items.push({
+      label: 'Invoices',
+      icon: 'pi pi-check-circle',
+      routerLink: ['/invoice']
+    })
+
 
     
   }
